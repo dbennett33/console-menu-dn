@@ -1,14 +1,16 @@
-﻿namespace ConsoleMenuDN
-{
-    internal class KeyMonitor
-    {
-        private readonly List<MenuItem> _menuOptions;
-        private readonly Action<int> _updateSelectedItem;
-        private readonly Func<int> _getSelectedItem;
-        private readonly Action _returnToMenu;
-        private readonly MenuState _menuState;
+﻿using ConsoleMenuDN.Interfaces;
 
-        internal KeyMonitor(List<MenuItem> menuOptions,
+namespace ConsoleMenuDN
+{
+    public class KeyMonitor : IKeyMonitor
+    {
+        public readonly List<MenuItem> _menuOptions;
+        public readonly Action<int> _updateSelectedItem;
+        public readonly Func<int> _getSelectedItem;
+        public readonly Action _returnToMenu;
+        public readonly MenuState _menuState;
+
+        public KeyMonitor(List<MenuItem> menuOptions,
                           Action<int> updateSelectedItem,
                           Func<int> getSelectedItem,
                           Action returnToMenu,
@@ -21,13 +23,13 @@
             _menuState = menuState;
         }
 
-        internal async Task MonitorKeyInputAsync()
+        public async Task MonitorKeyInputAsync(CancellationToken cancellationToken)
         {
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 if (_menuState.InMenu)
                 {
-                    var key = Console.ReadKey(true).Key;
+                    var key = _menuState.ConsoleWrapper.ReadKey(true).Key;
                     await HandleKeyInput(key);
                 }
 
@@ -35,7 +37,7 @@
             }
         }
 
-        private async Task HandleKeyInput(ConsoleKey key)
+        public async Task HandleKeyInput(ConsoleKey key)
         {
             int selectedItem = _getSelectedItem();
 
@@ -63,15 +65,15 @@
             }
         }
 
-        private async Task SelectItem(int selectedItem)
+        public async Task SelectItem(int selectedItem)
         {
-            Console.Clear();
-            Console.CursorVisible = true;
+            _menuState.ConsoleWrapper.Clear();
+            _menuState.ConsoleWrapper.SetCursorVisible(true);
             _menuState.InMenu = false;
 
             await _menuOptions[selectedItem].Action();
 
-            Console.WriteLine("Press any key to return to the menu...");
+            _menuState.ConsoleWrapper.WriteLine("Press any key to return to the menu...");
             Console.ReadKey();
             _returnToMenu();
         }

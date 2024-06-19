@@ -1,33 +1,35 @@
-﻿using System.Xml.Linq;
+﻿using ConsoleMenuDN.Interfaces;
 
 namespace ConsoleMenuDN
 {
-    internal class MenuRenderer
+    public class MenuRenderer
     {
-        private readonly string _title;
-        private readonly List<MenuItem> _menuOptions;
-        private readonly MenuSettings _menuSettings;
+        public readonly string _title;
+        public readonly List<MenuItem> _menuOptions;
+        public readonly MenuSettings _menuSettings;
+        public readonly MenuState _menuState;
 
-        private int _centreX;
+        public int _centreX;
 
-        internal MenuRenderer(string title, List<MenuItem> menuOptions, MenuSettings menuSettings)
+        public MenuRenderer(string title, List<MenuItem> menuOptions, MenuSettings menuSettings, MenuState menuState)
         {
             _title = title;
             _menuOptions = menuOptions;
             _menuSettings = menuSettings;
+            _menuState = menuState;
         }
 
-        internal void RedrawMenu(int selectedItem)
+        public void RedrawMenu(int selectedItem)
         {
-            Console.Clear();
-            Console.WriteLine("\x1b[3J");
-            _centreX = Console.BufferWidth / 2;
+            _menuState.ConsoleWrapper.Clear();
+            _menuState.ConsoleWrapper.WriteLine("\x1b[3J");
+            _centreX = _menuState.ConsoleWrapper.BufferWidth / 2;
             DrawHeader();
             DrawMenu(selectedItem);
             RefreshMenu(selectedItem);
         }
 
-        internal void RefreshMenu(int selectedItem)
+        public void RefreshMenu(int selectedItem)
         {
             foreach (var mo in _menuOptions)
             {
@@ -39,15 +41,15 @@ namespace ConsoleMenuDN
                 else
                 {
                     Console.ResetColor();
-                }                
+                }
 
                 Draw(GetDisplayName(mo), mo.XStartPos, mo.YStartPos);
             }
             Console.ResetColor();
         }
 
-        private void DrawMenu(int selectedItem)
-        {            
+        public void DrawMenu(int selectedItem)
+        {
             // TODO: This all assumes the header text is only 1 line high
             // - users might want fancy ASCII art headers and stuff so need to calculate height
 
@@ -62,10 +64,10 @@ namespace ConsoleMenuDN
                 {
                     offset += 4;
                 }
-            }            
+            }
 
             foreach (var mo in _menuOptions)
-            {     
+            {
                 mo.YStartPos = currentRow;
 
                 if (offset > 0)
@@ -82,10 +84,10 @@ namespace ConsoleMenuDN
                 currentRow++;
             }
 
-            Console.SetCursorPosition(_menuOptions[0].XStartPos, _menuOptions[0].YStartPos);
+            _menuState.ConsoleWrapper.SetCursorPosition(_menuOptions[0].XStartPos, _menuOptions[0].YStartPos);
         }
 
-        private string GetDisplayName(MenuItem mo)
+        public string GetDisplayName(MenuItem mo)
         {
             string name;
 
@@ -101,7 +103,7 @@ namespace ConsoleMenuDN
             return name;
         }
 
-        private void DrawHeader()
+        public void DrawHeader()
         {
             // TODO: This all assumes the header text is only 1 line high
             // - users might want fancy ASCII art headers and stuff so need to calculate height
@@ -116,7 +118,7 @@ namespace ConsoleMenuDN
 
             // 100% header bar
 
-            for (int i = 0; i < Console.BufferWidth; i++)
+            for (int i = 0; i < _menuState.ConsoleWrapper.BufferWidth; i++)
             {
                 Draw("=", i, 0);
                 Draw("=", i, 2);
@@ -125,12 +127,12 @@ namespace ConsoleMenuDN
             Draw(_title, _centreX - (_title.Length / 2), 1);
         }
 
-        private void Draw(string s, int x, int y)
+        public void Draw(string s, int x, int y)
         {
             try
             {
-                Console.SetCursorPosition(x, y);
-                Console.Write(s);
+                _menuState.ConsoleWrapper.SetCursorPosition(x, y);
+                _menuState.ConsoleWrapper.Write(s);
             }
             catch (ArgumentOutOfRangeException)
             {
