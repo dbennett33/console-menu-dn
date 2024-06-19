@@ -1,9 +1,6 @@
 name: Publish .NET package to NuGet
 
 on:
-  push:
-    branches:
-      - main
   release:
     types: [created]
 
