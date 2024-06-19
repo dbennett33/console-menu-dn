@@ -1,8 +1,9 @@
 name: Publish .NET package to NuGet
 
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+      - 'v*.*.*'  # Triggers on version tags like v1.0.0
 
 jobs:
   publish:
@@ -15,7 +16,11 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '8.0.x' # or '5.0.x' or '3.1.x' depending on your project
+
+    - name: Extract version from tag
+      id: extract_version
+      run: echo "::set-output name=VERSION::${GITHUB_REF/refs\/tags\/v/}"
 
     - name: Restore dependencies
       run: dotnet restore ./src/ConsoleMenuDN/ConsoleMenuDN.csproj
@@ -24,7 +29,7 @@ jobs:
       run: dotnet build --configuration Release --no-restore ./src/ConsoleMenuDN/ConsoleMenuDN.csproj
 
     - name: Pack project
-      run: dotnet pack --configuration Release --no-build --output ./nupkg ./src/ConsoleMenuDN/ConsoleMenuDN.csproj
+      run: dotnet pack ./src/ConsoleMenuDN/ConsoleMenuDN.csproj --configuration Release --no-build --output ./nupkg /p:PackageVersion=${{ steps.extract_version.outputs.VERSION }}
 
     - name: Publish package to NuGet
       run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
