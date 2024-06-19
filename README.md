@@ -15,6 +15,7 @@ You can install the ConsoleMenuDN package via NuGet:
 
 ```sh
 dotnet add package ConsoleMenuDN
+```
 
 ## Usage
 
