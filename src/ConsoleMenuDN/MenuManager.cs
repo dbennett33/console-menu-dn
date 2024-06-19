@@ -1,5 +1,8 @@
 ﻿namespace ConsoleMenuDN
 {
+    /// <summary>
+    /// Represents a menu manager that handles the rendering and interaction of a console menu.
+    /// </summary>
     public class MenuManager
     {
         private readonly List<MenuOption> _menuOptions;
@@ -10,6 +13,11 @@
 
         private int _selectedItem = 0;
 
+        /// <summary>
+        /// Initializes a new instance of the MenuManager class.
+        /// </summary>
+        /// <param name="menuOptions">The list of menu options.</param>
+        /// <param name="title">The title of the menu.</param>
         public MenuManager(List<MenuOption> menuOptions, string title)
         {
             _menuOptions = menuOptions;
@@ -19,6 +27,9 @@
             _keyMonitor = new KeyMonitor(_menuOptions, UpdateSelectedItem, GetSelectedItem, ReturnToMenu, _menuState);
         }
 
+        /// <summary>
+        /// Shows the console menu.
+        /// </summary>
         public void Show()
         {
             Console.Clear();

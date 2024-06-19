@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using ConsoleMenuDN;
 
@@ -16,14 +17,15 @@ namespace ConsoleMenuDemo
         {
             List<MenuOption> menuOptions = new List<MenuOption>
             {
-                new MenuOption("Option 1 With more text", () => Option1()),
+                new MenuOption("Option 1 With more text", () => NestedMenu()),
                 new MenuOption("Option 2 some extra", () => Console.WriteLine("Executing Option 2")),
                 new MenuOption("Option 3 lots and lots of text", () => Console.WriteLine("Executing Option 3")),
                 new MenuOption("Async Option", async () =>
                 {
                     await Task.Delay(1000); // Simulate async work
                     Console.WriteLine("Executing Async Option");
-                })
+                }),
+                new MenuOption("Exit", () => Environment.Exit(0))
             }; 
 
             var menu = new MenuManager(menuOptions, "Menu");

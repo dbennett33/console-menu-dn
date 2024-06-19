@@ -1,26 +1,26 @@
 ﻿namespace ConsoleMenuDN
 {
-    public class WindowMonitor
+    internal class WindowMonitor
     {
-        private int _windowWidth = Console.WindowWidth;
-        private int _windowHeight = Console.WindowHeight;
+        private int _windowWidth = Console.BufferWidth;
+        private int _windowHeight = Console.BufferHeight;
         private readonly Action _onResize;
         private readonly Func<bool> _isInMenu;
 
-        public WindowMonitor(Action onResize, Func<bool> isInMenu)
+        internal WindowMonitor(Action onResize, Func<bool> isInMenu)
         {
             _onResize = onResize;
             _isInMenu = isInMenu;
         }
 
-        public async Task MonitorWindowResizeAsync()
+        internal async Task MonitorWindowResizeAsync()
         {
             while (true)
             {
-                if (_windowWidth != Console.WindowWidth || _windowHeight != Console.WindowHeight)
+                if (_windowWidth != Console.BufferWidth || _windowHeight != Console.BufferHeight)
                 {
-                    _windowWidth = Console.WindowWidth;
-                    _windowHeight = Console.WindowHeight;
+                    _windowWidth = Console.BufferWidth;
+                    _windowHeight = Console.BufferHeight;
 
                     if (_isInMenu())
                     {

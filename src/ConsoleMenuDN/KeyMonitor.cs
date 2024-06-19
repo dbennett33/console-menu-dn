@@ -1,6 +1,6 @@
 ﻿namespace ConsoleMenuDN
 {
-    public class KeyMonitor
+    internal class KeyMonitor
     {
         private readonly List<MenuOption> _menuOptions;
         private readonly Action<int> _updateSelectedItem;
@@ -8,11 +8,7 @@
         private readonly Action _returnToMenu;
         private readonly MenuState _menuState;
 
-        private readonly List<ConsoleKey> _upKeys = new List<ConsoleKey> { ConsoleKey.UpArrow, ConsoleKey.J };
-        private readonly List<ConsoleKey> _downKeys;
-        private readonly List<ConsoleKey> _enterKeys;
-
-        public KeyMonitor(List<MenuOption> menuOptions,
+        internal KeyMonitor(List<MenuOption> menuOptions,
                           Action<int> updateSelectedItem,
                           Func<int> getSelectedItem,
                           Action returnToMenu,
@@ -25,7 +21,7 @@
             _menuState = menuState;
         }
 
-        public async Task MonitorKeyInputAsync()
+        internal async Task MonitorKeyInputAsync()
         {
             while (true)
             {
@@ -63,15 +59,21 @@
             }
             else if (Keybinds.EnterKeys.Contains(key))
             {
-                Console.Clear();
-                Console.CursorVisible = true;
-                _menuState.InMenu = false;
-                await _menuOptions[selectedItem].Action();
-                Console.WriteLine();
-                Console.WriteLine("Press any key to return to the menu...");
-                Console.ReadKey();
-                _returnToMenu();
+                await SelectItem(selectedItem);
             }
+        }
+
+        private async Task SelectItem(int selectedItem)
+        {
+            Console.Clear();
+            Console.CursorVisible = true;
+            _menuState.InMenu = false;
+
+            await _menuOptions[selectedItem].Action();
+
+            Console.WriteLine("Press any key to return to the menu...");
+            Console.ReadKey();
+            _returnToMenu();
         }
     }
 }
