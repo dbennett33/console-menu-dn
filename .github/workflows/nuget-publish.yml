@@ -26,7 +26,7 @@ jobs:
       run: dotnet restore ./src/ConsoleMenuDN/ConsoleMenuDN.csproj
 
     - name: Build project
-      run: dotnet build --configuration Release --no-restore ./src/ConsoleMenuDN/ConsoleMenuDN.csproj
+      run: dotnet build --configuration Release --no-restore ./src/ConsoleMenuDN/ConsoleMenuDN.csproj /p:Version=${{ steps.extract_version.outputs.VERSION }}
 
     - name: Pack project
       run: dotnet pack ./src/ConsoleMenuDN/ConsoleMenuDN.csproj --configuration Release --no-build --output ./nupkg /p:PackageVersion=${{ steps.extract_version.outputs.VERSION }}

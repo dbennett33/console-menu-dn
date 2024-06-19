@@ -7,6 +7,12 @@
 		<Description>A simple library for creating menus in console applications</Description>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageTags></PackageTags>
+		
+		<!-- Version properties to be set dynamically -->
+		<Version>1.0.0</Version>
+		<AssemblyVersion>$(Version)</AssemblyVersion>
+		<FileVersion>$(Version)</FileVersion>
+		<InformationalVersion>$(Version)</InformationalVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
