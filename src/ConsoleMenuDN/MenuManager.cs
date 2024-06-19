@@ -5,11 +5,12 @@
     /// </summary>
     public class MenuManager
     {
-        private readonly List<MenuOption> _menuOptions;
+        private readonly List<MenuItem> _menuOptions;
         private readonly MenuRenderer _renderer;
         private readonly WindowMonitor _windowMonitor;
         private readonly KeyMonitor _keyMonitor;
         private readonly MenuState _menuState;
+        private readonly MenuSettings _menuSettings;
 
         private int _selectedItem = 0;
 
@@ -18,11 +19,17 @@
         /// </summary>
         /// <param name="menuOptions">The list of menu options.</param>
         /// <param name="title">The title of the menu.</param>
-        public MenuManager(List<MenuOption> menuOptions, string title)
+        public MenuManager(List<MenuItem> menuOptions, string title, MenuSettings? menuSettings = null)
         {
+            if (menuSettings == null)
+            {
+                menuSettings = new MenuSettings();
+            }
+
             _menuOptions = menuOptions;
             _menuState = new MenuState();
-            _renderer = new MenuRenderer(title, _menuOptions);
+            _menuSettings = menuSettings;
+            _renderer = new MenuRenderer(title, _menuOptions, _menuSettings);
             _windowMonitor = new WindowMonitor(RedrawMenu, () => _menuState.InMenu);
             _keyMonitor = new KeyMonitor(_menuOptions, UpdateSelectedItem, GetSelectedItem, ReturnToMenu, _menuState);
         }

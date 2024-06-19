@@ -3,13 +3,16 @@
     internal class MenuRenderer
     {
         private readonly string _title;
-        private readonly List<MenuOption> _menuOptions;
+        private readonly List<MenuItem> _menuOptions;
+        private readonly MenuSettings _menuSettings;
+
         private int _centreX;
 
-        internal MenuRenderer(string title, List<MenuOption> menuOptions)
+        internal MenuRenderer(string title, List<MenuItem> menuOptions, MenuSettings menuSettings)
         {
             _title = title;
             _menuOptions = menuOptions;
+            _menuSettings = menuSettings;
         }
 
         internal void RedrawMenu(int selectedItem)
@@ -42,13 +45,30 @@
         }
 
         private void DrawMenu(int selectedItem)
-        {
+        {            
+            // TODO: This all assumes the header text is only 1 line high
+            // - users might want fancy ASCII art headers and stuff so need to calculate height
+
             int currentRow = 4;
-            
+            int offset = 0;
+
+            if (_menuSettings.Indentation == MenuSettings.IdentationType.Left)
+            {
+                offset = _menuOptions.OrderByDescending(mo => mo.Name.Length).First().Name.Length;
+            }            
+
             foreach (var mo in _menuOptions)
             {
                 mo.YStartPos = currentRow;
-                mo.XStartPos = _centreX - (mo.Name.Length / 2);
+                    
+                if (offset > 0)
+                {
+                    mo.XStartPos = _centreX - (offset / 2);
+                }
+                else
+                {
+                    mo.XStartPos = _centreX - (mo.Name.Length / 2);
+                }  
 
                 Draw(mo.Name, mo.XStartPos, currentRow);
 

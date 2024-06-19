@@ -30,14 +30,14 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        var menuOptions = new List<MenuOption>
+        var menuItems = new List<MenuItem>
         {
-            new MenuOption("Option 1", async () => await Task.Run(() => Console.WriteLine("Option 1 selected"))),
-            new MenuOption("Option 2", async () => await Task.Run(() => Console.WriteLine("Option 2 selected"))),
-            new MenuOption("Exit", async () => Environment.Exit(0))
+            new MenuItem("Option 1", async () => await Task.Run(() => Console.WriteLine("Option 1 selected"))),
+            new MenuItem("Option 2", async () => await Task.Run(() => Console.WriteLine("Option 2 selected"))),
+            new MenuItem("Exit", async () => Environment.Exit(0))
         };
 
-        var menu = new MenuManager(menuOptions, "Main Menu");
+        var menu = new MenuManager(menuItems, "Main Menu");
         menu.Show();
     }
 }
@@ -45,10 +45,10 @@ class Program
 
 ### Creating Menu Options
 
-Menu options can be created by instantiating the MenuOption class. Each option requires a name and an action to perform when selected:
+Menu options can be created by instantiating the MenuItem class. Each option requires a name and an action to perform when selected:
 
 ```
-var option = new MenuOption("Option 1", async () => await Task.Run(() => Console.WriteLine("Option 1 selected")));
+var option = new MenuItem("Option 1", async () => await Task.Run(() => Console.WriteLine("Option 1 selected")));
 ```
 
 ### Displaying the Menu
@@ -56,7 +56,7 @@ var option = new MenuOption("Option 1", async () => await Task.Run(() => Console
 To display the menu, create an instance of MenuManager and call the Show method:
 
 ```
-var menu = new MenuManager(menuOptions, "Main Menu");
+var menu = new MenuManager(menuItems, "Main Menu");
 menu.Show();
 ```
 

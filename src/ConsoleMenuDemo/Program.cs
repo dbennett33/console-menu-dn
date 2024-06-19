@@ -15,17 +15,17 @@ namespace ConsoleMenuDemo
 
         private static void MainMenu()
         {
-            List<MenuOption> menuOptions = new List<MenuOption>
+            List<MenuItem> menuOptions = new List<MenuItem>
             {
-                new MenuOption("Option 1 With more text", () => NestedMenu()),
-                new MenuOption("Option 2 some extra", () => Console.WriteLine("Executing Option 2")),
-                new MenuOption("Option 3 lots and lots of text", () => Console.WriteLine("Executing Option 3")),
-                new MenuOption("Async Option", async () =>
+                new MenuItem("Option 1 With more text", () => NestedMenu()),
+                new MenuItem("Option 2 some extra", () => Console.WriteLine("Executing Option 2")),
+                new MenuItem("Option 3 lots of text", () => Console.WriteLine("Executing Option 3")),
+                new MenuItem("Async Option", async () =>
                 {
                     await Task.Delay(1000); // Simulate async work
                     Console.WriteLine("Executing Async Option");
                 }),
-                new MenuOption("Exit", () => Environment.Exit(0))
+                new MenuItem("Exit", () => Environment.Exit(0))
             }; 
 
             var menu = new MenuManager(menuOptions, "Menu");
@@ -41,11 +41,11 @@ namespace ConsoleMenuDemo
 
         private static void NestedMenu()
         {
-            List<MenuOption> menuOptions = new List<MenuOption>
+            List<MenuItem> menuOptions = new List<MenuItem>
             {
-                new MenuOption("..", () =>  MainMenu()),
-                new MenuOption("Nested Menu Option 2", () => Console.WriteLine("Executing Option 2")),
-                new MenuOption("Nested Menu Option 3", () => Console.WriteLine("Executing Option 3"))              
+                new MenuItem("..", () =>  MainMenu()),
+                new MenuItem("Nested Menu Option 2", () => Console.WriteLine("Executing Option 2")),
+                new MenuItem("Nested Menu Option 3", () => Console.WriteLine("Executing Option 3"))              
             };
 
             var secondMenu = new MenuManager(menuOptions, "Second Menu");

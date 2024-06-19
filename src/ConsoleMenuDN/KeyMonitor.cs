@@ -2,13 +2,13 @@
 {
     internal class KeyMonitor
     {
-        private readonly List<MenuOption> _menuOptions;
+        private readonly List<MenuItem> _menuOptions;
         private readonly Action<int> _updateSelectedItem;
         private readonly Func<int> _getSelectedItem;
         private readonly Action _returnToMenu;
         private readonly MenuState _menuState;
 
-        internal KeyMonitor(List<MenuOption> menuOptions,
+        internal KeyMonitor(List<MenuItem> menuOptions,
                           Action<int> updateSelectedItem,
                           Func<int> getSelectedItem,
                           Action returnToMenu,
