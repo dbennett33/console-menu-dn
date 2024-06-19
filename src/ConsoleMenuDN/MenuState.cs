@@ -1,7 +1,7 @@
 ﻿namespace ConsoleMenuDN
 {
-    public class MenuState
+    internal class MenuState
     {
-        public bool InMenu { get; set; } = true;
+        internal bool InMenu { get; set; } = true;
     }
 }

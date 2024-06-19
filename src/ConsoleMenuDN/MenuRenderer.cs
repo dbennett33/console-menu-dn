@@ -1,18 +1,18 @@
 ﻿namespace ConsoleMenuDN
 {
-    public class MenuRenderer
+    internal class MenuRenderer
     {
         private readonly string _title;
         private readonly List<MenuOption> _menuOptions;
         private int _centreX;
 
-        public MenuRenderer(string title, List<MenuOption> menuOptions)
+        internal MenuRenderer(string title, List<MenuOption> menuOptions)
         {
             _title = title;
             _menuOptions = menuOptions;
         }
 
-        public void RedrawMenu(int selectedItem)
+        internal void RedrawMenu(int selectedItem)
         {
             Console.Clear();
             Console.WriteLine("\x1b[3J");
@@ -22,7 +22,7 @@
             RefreshMenu(selectedItem);
         }
 
-        public void RefreshMenu(int selectedItem)
+        internal void RefreshMenu(int selectedItem)
         {
             foreach (var mo in _menuOptions)
             {
@@ -44,7 +44,7 @@
         private void DrawMenu(int selectedItem)
         {
             int currentRow = 4;
-
+            
             foreach (var mo in _menuOptions)
             {
                 mo.YStartPos = currentRow;
@@ -60,7 +60,20 @@
 
         private void DrawHeader()
         {
-            for (int i = _centreX / 2; i < (_centreX / 2) * 3; i++)
+            // TODO: This all assumes the header text is only 1 line high
+            // - users might want fancy ASCII art headers and stuff so need to calculate height
+
+            // 50% header bar
+
+            //for (int i = _centreX / 2; i < (_centreX / 2) * 3; i++)
+            //{
+            //    Draw("=", i, 0);
+            //    Draw("=", i, 2);
+            //}
+
+            // 100% header bar
+
+            for (int i = 0; i < Console.BufferWidth; i++)
             {
                 Draw("=", i, 0);
                 Draw("=", i, 2);
@@ -76,7 +89,7 @@
                 Console.SetCursorPosition(x, y);
                 Console.Write(s);
             }
-            catch (ArgumentOutOfRangeException e)
+            catch (ArgumentOutOfRangeException)
             {
                 // window size is now smaller than the menu
             }

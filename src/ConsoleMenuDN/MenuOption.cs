@@ -5,8 +5,8 @@
         public int Index { get; set; }
         public string Name { get; set; }
         public Func<Task> Action { get; set; }  // Change Action to Func<Task> for async support
-        public int YStartPos { get; set; }
-        public int XStartPos { get; set; }
+        internal int YStartPos { get; set; }
+        internal int XStartPos { get; set; }
 
         // Constructor for asynchronous actions
         public MenuOption(string name, Func<Task> action)

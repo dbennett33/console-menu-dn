@@ -2,8 +2,8 @@
 {
     internal static class Keybinds
     {
-        internal static List<ConsoleKey> UpKeys = [ConsoleKey.UpArrow, ConsoleKey.K];
-        internal static List<ConsoleKey> DownKeys = [ConsoleKey.DownArrow, ConsoleKey.J];
-        internal static List<ConsoleKey> EnterKeys = [ConsoleKey.Enter, ConsoleKey.T];
+        internal static List<ConsoleKey> UpKeys = [ConsoleKey.UpArrow, ConsoleKey.K, ConsoleKey.W];
+        internal static List<ConsoleKey> DownKeys = [ConsoleKey.DownArrow, ConsoleKey.J, ConsoleKey.S];
+        internal static List<ConsoleKey> EnterKeys = [ConsoleKey.Enter, ConsoleKey.T, ConsoleKey.E];
     }
 }
