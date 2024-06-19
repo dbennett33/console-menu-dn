@@ -43,6 +43,7 @@ class Program
 }
 ```
 
+
 ### Creating Menu Options
 
 Menu options can be created by instantiating the MenuOption class. Each option requires a name and an action to perform when selected:
@@ -50,6 +51,7 @@ Menu options can be created by instantiating the MenuOption class. Each option r
 ```
 var option = new MenuOption("Option 1", async () => await Task.Run(() => Console.WriteLine("Option 1 selected")));
 ```
+
 
 ### Displaying the Menu
 
@@ -67,4 +69,4 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the GNU General Public License v3.0. See the LICENSE file for details.
