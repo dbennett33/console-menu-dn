@@ -30,45 +30,92 @@ dotnet add package ConsoleMenuDN
 
 Here's a simple example of how to use ConsoleMenuDN to create a console menu:
 
-```
+```c#
 using ConsoleMenuDN;
 
 class Program
 {
-    static async Task Main(string[] args)
+    static void Main(string[] args)
     {
-        var menuOptions = new List<MenuOption>
-        {
-            new MenuOption("Option 1", async () => await Task.Run(() => Console.WriteLine("Option 1 selected"))),
-            new MenuOption("Option 2", async () => await Task.Run(() => Console.WriteLine("Option 2 selected"))),
-            new MenuOption("Exit", async () => Environment.Exit(0))
-        };
+        MainMenu();
+    }
 
-        var menu = new MenuManager(menuOptions, "Main Menu");
+    private static void MainMenu()
+    {
+        List<MenuItem> menuOptions = new List<MenuItem>
+        {
+            new MenuItem("Fetch something", () => Console.WriteLine("Fetching")),
+            new MenuItem("Process something", () => Console.WriteLine("Processing")),
+            new MenuItem("Save something", () => Console.WriteLine("Saving")),  
+            new MenuItem("Exit", () => Environment.Exit(0))
+        }; 
+
+        var menu = new MenuManager(menuOptions, "Menu");
         menu.Show();
     }
 }
 ```
 
 
-### Creating Menu Options
-
-Menu options can be created by instantiating the MenuOption class. Each option requires a name and an action to perform when selected:
-
-```
-var option = new MenuOption("Option 1", async () => await Task.Run(() => Console.WriteLine("Option 1 selected")));
-```
-
 
 ### Displaying the Menu
 
 To display the menu, create an instance of MenuManager and call the Show method:
 
-```
+```c#
 var menu = new MenuManager(menuOptions, "Main Menu");
 menu.Show();
 ```
 
+
+### Creating Sub-Menus
+
+To use a sub-menu, create another instance of MenuManager with the desired MenuItems and call this from the parent menu.
+
+ConsoleMenuDN isn't smart, you need to manage 'return to previous menu' options yourself. You can create a sub-menu with the ability to return to its parent by following this pattern:
+
+```c#
+using ConsoleMenuDN;
+
+namespace ConsoleMenuDemo
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            MainMenu();
+        }
+
+        private static void MainMenu()
+        {
+            List<MenuItem> menuOptions = new List<MenuItem>
+            {
+                new MenuItem("Fetch something", () => Console.WriteLine("Fetching")),
+                new MenuItem("Process something", () => Console.WriteLine("Processing")),
+                new MenuItem("Save something", () => Console.WriteLine("Saving")),
+                new MenuItem("A Sub-Menu", () => NestedMenu()),  
+                new MenuItem("Exit", () => Environment.Exit(0))
+            }; 
+
+            var menu = new MenuManager(menuOptions, "Menu");
+            menu.Show();
+        }
+ 
+        private static void NestedMenu()
+        {
+            List<MenuItem> menuOptions = new List<MenuItem>
+            {
+                new MenuItem("Return to Main Menu", () =>  MainMenu()),
+                new MenuItem("Execute task A", () => Console.WriteLine("Executing Task A")),
+                new MenuItem("Execute task B", () => Console.WriteLine("Executing Task B"))              
+            };
+
+            var secondMenu = new MenuManager(menuOptions, "A Sub-Menu");
+            secondMenu.Show();
+        }        
+    }
+}
+```
 
 ## Contributing
 
