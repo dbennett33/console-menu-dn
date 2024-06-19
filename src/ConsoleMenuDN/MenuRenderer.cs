@@ -55,10 +55,21 @@
             if (_menuSettings.Indentation == MenuSettings.IdentationType.Left)
             {
                 offset = _menuOptions.OrderByDescending(mo => mo.Name.Length).First().Name.Length;
+
+                if (_menuSettings.ShowLineNumbers)
+                {
+                    offset += 4;
+                }
             }            
 
             foreach (var mo in _menuOptions)
             {
+                if (_menuSettings.ShowLineNumbers)
+                {
+                    mo.Name = $"({_menuOptions.IndexOf(mo) + 1}) {mo.Name}";
+                }
+
+
                 mo.YStartPos = currentRow;
                     
                 if (offset > 0)
