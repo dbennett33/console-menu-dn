@@ -5,7 +5,7 @@
 		<PackageId>ConsoleMenuDN</PackageId>
 		<Authors>DBennett33</Authors>
 		<Description>A simple library for creating menus in console applications</Description>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageReadmeFile>..\..\README.md</PackageReadmeFile>
 		<PackageTags></PackageTags>
 		
 		<!-- Version properties to be set dynamically -->
@@ -14,12 +14,7 @@
 		<FileVersion>$(Version)</FileVersion>
 		<InformationalVersion>$(Version)</InformationalVersion>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<None Include="README.md" Pack="true" PackagePath="\" />
-	</ItemGroup>
-
-
+	
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<TargetFramework>net8.0</TargetFramework>
