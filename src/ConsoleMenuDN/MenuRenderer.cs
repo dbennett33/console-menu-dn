@@ -1,4 +1,6 @@
-﻿namespace ConsoleMenuDN
+﻿using System.Xml.Linq;
+
+namespace ConsoleMenuDN
 {
     internal class MenuRenderer
     {
@@ -37,9 +39,9 @@
                 else
                 {
                     Console.ResetColor();
-                }
+                }                
 
-                Draw(mo.Name, mo.XStartPos, mo.YStartPos);
+                Draw(GetDisplayName(mo), mo.XStartPos, mo.YStartPos);
             }
             Console.ResetColor();
         }
@@ -63,15 +65,9 @@
             }            
 
             foreach (var mo in _menuOptions)
-            {
-                if (_menuSettings.ShowLineNumbers)
-                {
-                    mo.Name = $"({_menuOptions.IndexOf(mo) + 1}) {mo.Name}";
-                }
-
-
+            {     
                 mo.YStartPos = currentRow;
-                    
+
                 if (offset > 0)
                 {
                     mo.XStartPos = _centreX - (offset / 2);
@@ -79,14 +75,30 @@
                 else
                 {
                     mo.XStartPos = _centreX - (mo.Name.Length / 2);
-                }  
+                }
 
-                Draw(mo.Name, mo.XStartPos, currentRow);
+                Draw(GetDisplayName(mo), mo.XStartPos, currentRow);
 
                 currentRow++;
             }
 
             Console.SetCursorPosition(_menuOptions[0].XStartPos, _menuOptions[0].YStartPos);
+        }
+
+        private string GetDisplayName(MenuItem mo)
+        {
+            string name;
+
+            if (_menuSettings.ShowLineNumbers)
+            {
+                name = $"({_menuOptions.IndexOf(mo) + 1}) {mo.Name}";
+            }
+            else
+            {
+                name = mo.Name;
+            }
+
+            return name;
         }
 
         private void DrawHeader()
