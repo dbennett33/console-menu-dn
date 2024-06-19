@@ -78,8 +78,7 @@
             }
             catch (ArgumentOutOfRangeException e)
             {
-                Console.Clear();
-                Console.WriteLine(e.Message);
+                // window size is now smaller than the menu
             }
         }
     }
