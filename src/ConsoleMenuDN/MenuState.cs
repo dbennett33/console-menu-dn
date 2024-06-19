@@ -1,7 +1,10 @@
-﻿namespace ConsoleMenuDN
+﻿using ConsoleMenuDN.Interfaces;
+
+namespace ConsoleMenuDN
 {
-    internal class MenuState
+    public class MenuState
     {
-        internal bool InMenu { get; set; } = true;
+        public bool InMenu { get; set; } = true;
+        public IConsoleWrapper ConsoleWrapper { get; set; } = new ConsoleWrapper();
     }
 }
