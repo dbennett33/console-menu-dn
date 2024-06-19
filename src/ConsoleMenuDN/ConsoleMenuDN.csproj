@@ -3,7 +3,7 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageId>ConsoleMenuDN</PackageId>
-		<Version>0.0.1</Version>
+		<Version>0.0.2</Version>
 		<Authors>DBennett33</Authors>
 		<Description>A simple library for creating menus in console applications</Description>
 		<PackageTags></PackageTags>
