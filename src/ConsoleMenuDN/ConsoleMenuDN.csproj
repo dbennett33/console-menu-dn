@@ -6,8 +6,15 @@
 		<Version>0.0.3</Version>
 		<Authors>DBennett33</Authors>
 		<Description>A simple library for creating menus in console applications</Description>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageTags></PackageTags>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="\"/>
+	</ItemGroup>
+
+
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<TargetFramework>net8.0</TargetFramework>
