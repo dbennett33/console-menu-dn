@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace ConsoleMenuDN
+﻿namespace ConsoleMenuDN
 {
     public class MenuOption
     {
