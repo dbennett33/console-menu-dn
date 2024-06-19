@@ -8,6 +8,10 @@
         private readonly Action _returnToMenu;
         private readonly MenuState _menuState;
 
+        private readonly List<ConsoleKey> _upKeys = new List<ConsoleKey> { ConsoleKey.UpArrow, ConsoleKey.J };
+        private readonly List<ConsoleKey> _downKeys;
+        private readonly List<ConsoleKey> _enterKeys;
+
         public KeyMonitor(List<MenuOption> menuOptions,
                           Action<int> updateSelectedItem,
                           Func<int> getSelectedItem,
@@ -39,7 +43,7 @@
         {
             int selectedItem = _getSelectedItem();
 
-            if (key == ConsoleKey.UpArrow)
+            if (Keybinds.UpKeys.Contains(key))
             {
                 selectedItem--;
                 if (selectedItem < 0)
@@ -48,7 +52,7 @@
                 }
                 _updateSelectedItem(selectedItem);
             }
-            else if (key == ConsoleKey.DownArrow)
+            else if (Keybinds.DownKeys.Contains(key))
             {
                 selectedItem++;
                 if (selectedItem >= _menuOptions.Count)
@@ -57,7 +61,7 @@
                 }
                 _updateSelectedItem(selectedItem);
             }
-            else if (key == ConsoleKey.Enter)
+            else if (Keybinds.EnterKeys.Contains(key))
             {
                 Console.Clear();
                 Console.CursorVisible = true;
