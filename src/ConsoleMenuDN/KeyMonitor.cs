@@ -43,26 +43,52 @@ namespace ConsoleMenuDN
 
             if (Keybinds.UpKeys.Contains(key))
             {
-                selectedItem--;
-                if (selectedItem < 0)
-                {
-                    selectedItem = _menuOptions.Count - 1;
-                }
-                _updateSelectedItem(selectedItem);
+                MoveUp(selectedItem);
             }
             else if (Keybinds.DownKeys.Contains(key))
             {
-                selectedItem++;
-                if (selectedItem >= _menuOptions.Count)
-                {
-                    selectedItem = 0;
-                }
-                _updateSelectedItem(selectedItem);
+                MoveDown(selectedItem);
             }
             else if (Keybinds.EnterKeys.Contains(key))
             {
                 await SelectItem(selectedItem);
             }
+            else if (key >= ConsoleKey.D0 && key <= ConsoleKey.D9)
+            {
+                await SelectItemViaNumberKey(key);
+            }
+        }
+
+        private async Task SelectItemViaNumberKey(ConsoleKey key)
+        {
+            int keyNumber = (int)key - (int)ConsoleKey.D0;
+            keyNumber--;
+            if (keyNumber < _menuOptions.Count)
+            {
+                await SelectItem(keyNumber);
+            }
+        }
+
+        private int MoveDown(int selectedItem)
+        {
+            selectedItem++;
+            if (selectedItem >= _menuOptions.Count)
+            {
+                selectedItem = 0;
+            }
+            _updateSelectedItem(selectedItem);
+            return selectedItem;
+        }
+
+        private int MoveUp(int selectedItem)
+        {
+            selectedItem--;
+            if (selectedItem < 0)
+            {
+                selectedItem = _menuOptions.Count - 1;
+            }
+            _updateSelectedItem(selectedItem);
+            return selectedItem;
         }
 
         public async Task SelectItem(int selectedItem)
