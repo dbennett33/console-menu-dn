@@ -1,7 +1,7 @@
 # ConsoleMenuDN
 
-[![.NET](https://github.com/dbennett33/console-menu-dn/actions/workflows/dotnet.yml/badge.svg)](https://github.com/dbennett33/console-menu-dn/actions/workflows/dotnet.yml)
-https://github.com/dbennett33/console-menu-dn
+[![.NET](https://github.com/dbennett33/console-menu-dn/actions/workflows/dotnet.yml/badge.svg)](https://github.com/dbennett33/console-menu-dn/actions/workflows/dotnet.yml)  
+[GitHub](https://github.com/dbennett33/console-menu-dn)
 
 ConsoleMenuDN is a helper library for creating interactive menus within console applications. This library simplifies the process of building and managing console-based menus, making it easier to create user-friendly command-line interfaces.
 
